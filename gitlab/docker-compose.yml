@@ -6,8 +6,14 @@ services:
     container_name: gitlab
     restart: always
     hostname: "${HOSTNAME}"
+    GITLAB_OMNIBUS_CONFIG: |
+      external_url 'http://${HOSTNAME}'
+      nginx['listen_port'] = 80
+      nginx['listen_https'] = false
     ports:
       - "22:22"
+    networks:
+      - reverse_proxy_external
     volumes:
       - /tank/config/gitlab:/etc/gitlab
       - /tank/logs/gitlab:/var/log/gitlab
