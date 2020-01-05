@@ -1,0 +1,37 @@
+version: "2"
+
+services:
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID="${PUID}"
+      - PGID="${PGID}"
+      - TZ="${TZ}"
+      - URL="${BASE_URL}"
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+      - EMAIL="${EMAIL}"
+    volumes:
+      - /tank/config/docker-letsencrypt:/config
+      - /tank/logs/docker-letsencrypt:/config/log
+      - ./renewal-hooks:/config/etc/letsencrypt/renewal-hooks
+      - ./site-confs:/config/nginx/site-confs
+    ports:
+      - 443:443
+      - 80:80
+    networks:
+      - reverse_proxy
+      - reverse_proxy_external
+    restart: unless-stopped
+
+networks:
+  reverse_proxy:
+    external:
+      name: reverse_proxy
+  reverse_proxy_external:
+    external:
+      name: reverse_proxy_external
