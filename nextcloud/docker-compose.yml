@@ -1,0 +1,59 @@
+version: '2'
+
+services:
+  db:
+    image: mariadb
+    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    restart: always
+    volumes:
+      - db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}"
+      - MYSQL_USER="${MYSQL_USER}"
+      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
+      - MYSQL_DATABASE="${MYSQL_DB}"
+
+  redis:
+    image: redis:buster
+    restart: always
+
+  nextcloud:
+    build: ./nextcloud
+    restart: always
+    volumes:
+      - app_data:/var/www/html
+    environment:
+      - MYSQL_HOST=db
+      - REDIS_HOST=redis
+      - MYSQL_USER="${MYSQL_USER}"
+      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
+      - MYSQL_DATABASE="${MYSQL_DB}"
+      - SMTP_HOST="${SMTP_HOST}"
+      - SMTP_SECURE=SSL
+      - SMTP_NAME="${SMTP_USERNAME}"
+      - SMTP_PASSWORD="${SMTP_PASSWORD}"
+      - MAIL_FROM_ADDRESS="${SMTP_FROM_ADDR}"
+    depends_on:
+      - db
+      - redis
+
+  nginx:
+    build: ./nginx
+    container_name: nextcloud_web
+    restart: always
+    volumes:
+      - app_data:/var/www/html:ro
+    depends_on:
+      - nextcloud
+    networks:
+      - default
+      - reverse_proxy
+
+volumes:
+  db:
+  app_data:
+
+networks:
+  reverse_proxy:
+    external:
+      name: reverse_proxy
