@@ -1,0 +1,20 @@
+version: "3"
+
+services:
+  jenkins:
+    build:
+      context: ./jenkins
+      args:
+        - DOCKER_GROUP_ID
+    container_name: jenkins
+    networks:
+      - reverse_proxy_external
+    volumes:
+      - home:/var/jenkins_home
+
+volumes:
+  home:
+
+networks:
+  reverse_proxy_external:
+    external: true
