@@ -11,6 +11,7 @@ services:
       - reverse_proxy_external
     volumes:
       - home:/var/jenkins_home
+      - ${DOCKER_SOCK}:/var/run/docker.sock
 
 volumes:
   home:

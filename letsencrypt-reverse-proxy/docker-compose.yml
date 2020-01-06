@@ -26,7 +26,7 @@ services:
     networks:
       - reverse_proxy
       - reverse_proxy_external
-    restart: unless-stopped
+    restart: always
 
 networks:
   reverse_proxy:
