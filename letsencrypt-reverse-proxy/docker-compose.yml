@@ -23,10 +23,10 @@ services:
       - 443:443
       - 80:80
     networks:
+      host_network:
       reverse_proxy:
         aliases:
           - letsencrypt.proxy
-        host_network:
     restart: always
 
 networks:
