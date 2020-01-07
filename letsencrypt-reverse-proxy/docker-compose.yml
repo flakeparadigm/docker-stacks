@@ -23,13 +23,17 @@ services:
       - 443:443
       - 80:80
     networks:
-      host_network:
+      bridge_net:
       reverse_proxy:
         aliases:
           - letsencrypt.proxy
+    extra_hosts:
+      - omv.proxy:${BRIDGE_GATEWAY}
     restart: always
 
 networks:
-  host_network:
+  bridge_net:
+    external: true
+    name: ${BRIDGE_NETWORK}
   reverse_proxy:
     external: true
