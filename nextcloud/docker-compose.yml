@@ -1,4 +1,4 @@
-version: '2'
+version: "3"
 
 services:
   db:
@@ -12,12 +12,16 @@ services:
       - MYSQL_USER="${MYSQL_USER}"
       - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
       - MYSQL_DATABASE="${MYSQL_DB}"
+    networks:
+      - internal
 
   redis:
     image: redis:buster
     restart: always
+    networks:
+      - internal
 
-  nextcloud:
+  app:
     build: ./nextcloud
     restart: always
     volumes:
@@ -36,24 +40,30 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      internal:
+        aliases:
+          - app.internal
 
-  nginx:
+  web:
     build: ./nginx
-    container_name: nextcloud_web
     restart: always
     volumes:
       - app_data:/var/www/html:ro
     depends_on:
-      - nextcloud
+      - app
     networks:
-      - default
-      - reverse_proxy
+      internal:
+      reverse_proxy:
+        aliases:
+          - nextcloud.proxy
 
 volumes:
   db:
   app_data:
 
 networks:
+  internal:
   reverse_proxy:
     external:
       name: reverse_proxy

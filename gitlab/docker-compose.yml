@@ -3,7 +3,6 @@ version: "3"
 services:
   gitlab:
     image: gitlab/gitlab-ce:latest
-    container_name: gitlab
     restart: always
     hostname: "${HOSTNAME}"
     environment:
@@ -14,12 +13,14 @@ services:
     ports:
       - "22:22"
     networks:
-      - reverse_proxy_external
+      reverse_proxy:
+        aliases:
+          - gitlab.proxy
     volumes:
       - /tank/config/gitlab:/etc/gitlab
       - /tank/logs/gitlab:/var/log/gitlab
       - /tank/app_data/gitlab:/var/opt/gitlab
 
 networks:
-  reverse_proxy_external:
+  reverse_proxy:
     external: true

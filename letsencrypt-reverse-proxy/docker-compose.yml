@@ -3,7 +3,6 @@ version: "3"
 services:
   letsencrypt:
     image: linuxserver/letsencrypt
-    container_name: letsencrypt
     cap_add:
       - NET_ADMIN
     environment:
@@ -24,12 +23,13 @@ services:
       - 443:443
       - 80:80
     networks:
-      - reverse_proxy
-      - reverse_proxy_external
+      reverse_proxy:
+        aliases:
+          - letsencrypt.proxy
+        host_network:
     restart: always
 
 networks:
+  host_network:
   reverse_proxy:
-    external: true
-  reverse_proxy_external:
     external: true

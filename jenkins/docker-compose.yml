@@ -6,9 +6,11 @@ services:
       context: ./jenkins
       args:
         - DOCKER_GROUP_ID
-    container_name: jenkins
     networks:
-      - reverse_proxy_external
+      reverse_proxy:
+        aliases:
+          - jenkins.proxy
+      internet:
     volumes:
       - home:/var/jenkins_home
       - ${DOCKER_SOCK}:/var/run/docker.sock
@@ -17,5 +19,6 @@ volumes:
   home:
 
 networks:
-  reverse_proxy_external:
+  internet:
+  reverse_proxy:
     external: true
