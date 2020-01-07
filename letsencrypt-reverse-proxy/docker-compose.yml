@@ -16,8 +16,8 @@ services:
       - DNSPLUGIN=cloudflare
       - EMAIL="${EMAIL}"
     volumes:
-      - /tank/config/docker-letsencrypt:/config
-      - /tank/logs/docker-letsencrypt:/config/log
+      - ${BASE_BIND_DIR}/config/docker-letsencrypt:/config
+      - ${BASE_BIND_DIR}/logs/docker-letsencrypt:/config/log
       - ./renewal-hooks:/config/etc/letsencrypt/renewal-hooks
       - ./site-confs:/config/nginx/site-confs
     ports:
