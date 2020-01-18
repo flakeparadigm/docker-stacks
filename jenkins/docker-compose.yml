@@ -1,4 +1,4 @@
-version: "3"
+version: "2.1"
 
 services:
   jenkins:
@@ -20,5 +20,6 @@ volumes:
 
 networks:
   internet:
+    enable_ipv6: true
   reverse_proxy:
     external: true
