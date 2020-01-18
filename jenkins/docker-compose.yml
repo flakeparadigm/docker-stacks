@@ -10,7 +10,7 @@ services:
       reverse_proxy:
         aliases:
           - jenkins.proxy
-      internet:
+      bridge_net:
     volumes:
       - home:/var/jenkins_home
       - ${DOCKER_SOCK}:/var/run/docker.sock
@@ -19,7 +19,8 @@ volumes:
   home:
 
 networks:
-  internet:
-    enable_ipv6: true
+  bridge_net:
+    external: true
+    name: ${BRIDGE_NETWORK}
   reverse_proxy:
     external: true
