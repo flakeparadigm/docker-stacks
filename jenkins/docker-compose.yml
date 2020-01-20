@@ -7,20 +7,20 @@ services:
       args:
         - DOCKER_GROUP_ID
     networks:
-      reverse_proxy:
-        aliases:
-          - jenkins.proxy
-      bridge_net:
+      internet:
     volumes:
       - home:/var/jenkins_home
       - ${DOCKER_SOCK}:/var/run/docker.sock
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.jenkins.rule: "Host(`${PUBLIC_HOSTNAME}`)"
+      traefik.http.routers.jenkins.entrypoints: "https"
+      traefik.http.routers.jenkins.tls: "true" # Should fallback to Let's Encrypt Certificate
 
 volumes:
   home:
 
 networks:
-  bridge_net:
-    external: true
-    name: ${BRIDGE_NETWORK}
-  reverse_proxy:
-    external: true
+  internet: # specified to be explicit, and allow for adding IPv6 interfaces
+    external:
+      name: ${BRIDGE_NETWORK}

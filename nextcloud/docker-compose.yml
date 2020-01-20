@@ -54,9 +54,11 @@ services:
       - app
     networks:
       internal:
-      reverse_proxy:
-        aliases:
-          - nextcloud.proxy
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.nextcloud.rule: "Host(`${PUBLIC_HOSTNAME}`)"
+      traefik.http.routers.nextcloud.entrypoints: "https"
+      traefik.http.routers.nextcloud.tls: "true" # Should fallback to Let's Encrypt Certificate
 
 volumes:
   db:
@@ -64,6 +66,3 @@ volumes:
 
 networks:
   internal:
-  reverse_proxy:
-    external:
-      name: reverse_proxy

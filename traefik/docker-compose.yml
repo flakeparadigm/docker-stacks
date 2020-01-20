@@ -1,0 +1,48 @@
+version: "3.5"
+
+services:
+  reverse-proxy:
+    image: traefik:v2.1
+    command:
+      - "--api.dashboard=true"
+      - "--entryPoints.http.address=:80"
+      - "--entryPoints.https.address=:443"
+      - "--entryPoints.traefik.address=:8080"
+      # Docker
+      - "--providers.docker"
+      - "--providers.docker.exposedbydefault=false"
+      # SSL
+      - "--certificatesResolvers.letsencrypt.acme.caServer=${LE_CASERVER}"
+      - "--certificatesresolvers.letsencrypt.acme.dnschallenge=true"
+      - "--certificatesResolvers.letsencrypt.acme.email=${LE_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
+      - "--certificatesResolvers.letsencrypt.acme.dnsChallenge.provider=${LE_DNS_PROVIDER}"
+    environment:
+      - "CF_DNS_API_TOKEN=${LE_DNS_SECRET}"
+    network_mode: host
+    ports:
+      - "80:80" # The HTTP port
+      - "443:443" # The HTTPS port
+      - "8080:8080" # Dashboard
+    volumes:
+      - ${ACME_CONFIG_DIR}:/etc/traefik/acme
+      # So that Traefik can listen to the Docker events
+      - ${DOCKER_SOCK}:/var/run/docker.sock
+    labels:
+      traefik.enable: "true"
+      # default http -> https redirection for all routers
+      traefik.http.routers.http-catchall.rule: "hostregexp(`{host:.+}`)"
+      traefik.http.routers.http-catchall.entrypoints: http
+      traefik.http.routers.http-catchall.middlewares: redirect-to-https@docker
+      traefik.http.middlewares.redirect-to-https.redirectscheme.scheme: https
+      # dashboard config
+      traefik.http.services.traefik.loadbalancer.server.port: "888" # hack required by docker, but not used
+      traefik.http.routers.api.rule: "PathPrefix(`/api`) || PathPrefix(`/dashboard`)"
+      traefik.http.routers.api.entrypoints: traefik
+      traefik.http.routers.api.service: api@internal
+      traefik.http.routers.api.middlewares: auth
+      traefik.http.middlewares.auth.basicauth.users: "${DASHBOARD_USERS}"
+      # Setup shared Let's Encrypt certificate: https://github.com/containous/traefik/issues/5317#issuecomment-562778192
+      traefik.http.routers.letsencrypt.tls.certresolver: letsencrypt
+      traefik.http.routers.letsencrypt.tls.domains[0].main: "${LE_HOSTNAME}"
+      traefik.http.routers.letsencrypt.tls.domains[0].sans: "*.${LE_HOSTNAME}"
