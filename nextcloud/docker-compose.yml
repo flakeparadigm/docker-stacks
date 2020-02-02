@@ -58,7 +58,8 @@ services:
       traefik.enable: "true"
       traefik.http.routers.nextcloud.rule: "Host(`${PUBLIC_HOSTNAME}`)"
       traefik.http.routers.nextcloud.entrypoints: "https"
-      traefik.http.routers.nextcloud.tls: "true" # Should fallback to Let's Encrypt Certificate
+      traefik.http.routers.nextcloud.tls.certresolver: "letsencrypt"
+      traefik.http.routers.nextcloud.tls.domains[0].main: "${PUBLIC_HOSTNAME}"
 
 volumes:
   db:
