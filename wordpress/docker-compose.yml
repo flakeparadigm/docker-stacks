@@ -3,7 +3,7 @@ version: "3"
 services:
   db:
     image: mysql:8
-    command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
+    command: --default-authentication-plugin=mysql_native_password
     restart: always
     volumes:
       - db:/var/lib/mysql
