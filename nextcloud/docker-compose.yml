@@ -2,7 +2,7 @@ version: "3"
 
 services:
   db:
-    image: mariadb
+    image: mariadb:10
     command: --transaction-isolation=READ-COMMITTED --binlog-format=ROW
     restart: always
     volumes:
@@ -12,14 +12,10 @@ services:
       - MYSQL_USER="${MYSQL_USER}"
       - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
       - MYSQL_DATABASE="${MYSQL_DB}"
-    networks:
-      - internal
 
   redis:
     image: redis:buster
     restart: always
-    networks:
-      - internal
 
   app:
     build: ./nextcloud
@@ -41,7 +37,7 @@ services:
       - db
       - redis
     networks:
-      internal:
+      default:
         aliases:
           - app.internal
 
@@ -52,8 +48,6 @@ services:
       - app_data:/var/www/html:ro
     depends_on:
       - app
-    networks:
-      internal:
     labels:
       traefik.enable: "true"
       traefik.http.routers.nextcloud.rule: "Host(`${PUBLIC_HOSTNAME}`)"
@@ -64,6 +58,3 @@ services:
 volumes:
   db:
   app_data:
-
-networks:
-  internal:
