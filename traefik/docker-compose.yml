@@ -7,7 +7,6 @@ services:
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
       - "--entryPoints.https.address=:443"
-      - "--entryPoints.irc.address=:6697"
       - "--entryPoints.traefik.address=:8080"
       # Docker
       - "--providers.docker"
@@ -24,7 +23,6 @@ services:
     ports:
       - "80:80" # The HTTP port
       - "443:443" # The HTTPS port
-      - "6697:6697" # IRC
       - "8080:8080" # Dashboard
     restart: always
     volumes:

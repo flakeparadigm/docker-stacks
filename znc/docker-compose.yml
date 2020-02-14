@@ -4,6 +4,8 @@ services:
   znc:
     build: ./znc
     restart: always
+    ports:
+      - "6697:6697"
     volumes:
       - znc_data:/znc-data
     labels:
@@ -12,11 +14,6 @@ services:
       traefik.http.routers.znc-web.entrypoints: "https"
       traefik.http.routers.znc-web.tls: "true" # Should fallback to Let's Encrypt Certificate
       traefik.http.services.znc-web.loadbalancer.server.port: "8080"
-
-      traefik.tcp.routers.znc-irc.rule: "HostSNI(`${PUBLIC_HOSTNAME}`)"
-      traefik.tcp.routers.znc-irc.entrypoints: "irc"
-      traefik.tcp.routers.znc-irc.tls: "true" # Should fallback to Let's Encrypt Certificate
-      traefik.tcp.services.znc-irc.loadbalancer.server.port: "6667"
 
 volumes:
   znc_data:
