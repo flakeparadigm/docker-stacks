@@ -4,9 +4,12 @@ services:
   reverse-proxy:
     image: traefik:2.1
     command:
+      - "--log.level=DEBUG"
+      - "--accesslog"
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
       - "--entryPoints.https.address=:443"
+      - "--entryPoints.irc.address=:6697"
       - "--entryPoints.traefik.address=:8080"
       # Docker
       - "--providers.docker"
@@ -19,11 +22,13 @@ services:
       - "--certificatesResolvers.letsencrypt.acme.dnsChallenge.provider=${LE_DNS_PROVIDER}"
     environment:
       - "CF_DNS_API_TOKEN=${LE_DNS_SECRET}"
-    network_mode: host
+    network_mode: host # Use host mode for proper client IP forwarding
     ports:
       - "80:80" # The HTTP port
       - "443:443" # The HTTPS port
+      - "6697:6697" # IRC
       - "8080:8080" # Dashboard
+    restart: always
     volumes:
       - ${ACME_CONFIG_DIR}:/etc/traefik/acme
       # So that Traefik can listen to the Docker events

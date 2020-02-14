@@ -8,6 +8,7 @@ services:
         - DOCKER_GROUP_ID
     networks:
       internet:
+    restart: always
     volumes:
       - home:/var/jenkins_home
       - ${DOCKER_SOCK}:/var/run/docker.sock
