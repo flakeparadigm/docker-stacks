@@ -4,8 +4,6 @@ services:
   reverse-proxy:
     image: traefik:2.1
     command:
-      - "--log.level=DEBUG"
-      - "--accesslog"
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
       - "--entryPoints.https.address=:443"
