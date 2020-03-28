@@ -1,0 +1,28 @@
+pipeline {
+  agent any
+  stages {
+    stage('Pull') {
+      steps {
+        build 'pull repo docker-stacks'
+      }
+    }
+
+    stage('Nextcloud') {
+      steps {
+        build 'update app docker-stacks-nextcloud'
+      }
+    }
+
+    stage('ZNC') {
+      steps {
+        build 'update app docker-stacks-znc'
+      }
+    }
+
+    stage('Traefik') {
+      steps {
+        build 'update app docker-stacks-traefik'
+      }
+    }
+  }
+}
