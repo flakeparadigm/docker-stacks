@@ -1,0 +1,22 @@
+pipeline {
+  agent any
+  stages {
+    stage('Pull') {
+      steps {
+        build 'pull repo docker-stacks'
+      }
+    }
+
+    stage('Wordpress') {
+      steps {
+        build 'update app docker-stacks-wordpress'
+      }
+    }
+
+    stage('Traefik') {
+      steps {
+        build 'update app docker-stacks-traefik'
+      }
+    }
+  }
+}
