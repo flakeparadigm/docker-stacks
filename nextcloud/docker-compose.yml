@@ -21,9 +21,11 @@ services:
     build: ./nextcloud
     restart: always
     volumes:
-      - "${APP_DATA}:/var/www/html"
+      - "nextcloud:/var/www/html"
+      - "${APP_DATA}:/var/www/html/data"
+      - "${APP_CONFIG}:/var/www/html/config"
     environment:
-      - MYSQL_HOST=db
+      - MYSQL_HOST=notmydb
       - REDIS_HOST=redis
       - MYSQL_USER="${MYSQL_USER}"
       - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
@@ -45,7 +47,7 @@ services:
     build: ./nginx
     restart: always
     volumes:
-      - "${APP_DATA}:/var/www/html:ro"
+      - "nextcloud:/var/www/html:ro"
     depends_on:
       - app
     labels:
@@ -57,3 +59,4 @@ services:
 
 volumes:
   db:
+  nextcloud:
