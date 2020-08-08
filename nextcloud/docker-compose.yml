@@ -25,7 +25,7 @@ services:
       - "${APP_DATA}:/var/www/html/data"
       - "${APP_CONFIG}:/var/www/html/config"
     environment:
-      - MYSQL_HOST=notmydb
+      - MYSQL_HOST=db
       - REDIS_HOST=redis
       - MYSQL_USER="${MYSQL_USER}"
       - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
