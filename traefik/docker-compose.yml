@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   reverse-proxy:
-    image: traefik:2.1
+    image: traefik:2.3
     command:
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
@@ -31,6 +31,7 @@ services:
       - ${DOCKER_SOCK}:/var/run/docker.sock
     labels:
       traefik.enable: "true"
+      traefik.experimental.pilot.token: "${TRAEFIK_PILOT_TOKEN}"
       # default http -> https redirection for all routers
       traefik.http.routers.http-catchall.rule: "hostregexp(`{host:.+}`)"
       traefik.http.routers.http-catchall.entrypoints: http
