@@ -18,7 +18,7 @@ services:
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
       - "--certificatesResolvers.letsencrypt.acme.dnsChallenge.provider=${LE_DNS_PROVIDER}"
     environment:
-      - "CF_DNS_API_TOKEN=${LE_DNS_SECRET}"
+      CF_DNS_API_TOKEN: "${LE_DNS_SECRET}"
     network_mode: host # Use host mode for proper client IP forwarding
     ports:
       - "80:80" # The HTTP port

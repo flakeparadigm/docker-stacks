@@ -8,10 +8,10 @@ services:
     volumes:
       - db:/var/lib/mysql
     environment:
-      - MYSQL_ROOT_PASSWORD="${MYSQL_ROOT_PASSWORD}"
-      - MYSQL_USER="${MYSQL_USER}"
-      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
-      - MYSQL_DATABASE="${MYSQL_DB}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DB}"
 
   redis:
     image: redis:buster
@@ -25,17 +25,17 @@ services:
       - "${APP_DATA}:/var/www/html/data"
       - "${APP_CONFIG}:/var/www/html/config"
     environment:
-      - MYSQL_HOST=db
-      - REDIS_HOST=redis
-      - MYSQL_USER="${MYSQL_USER}"
-      - MYSQL_PASSWORD="${MYSQL_PASSWORD}"
-      - MYSQL_DATABASE="${MYSQL_DB}"
-      - SMTP_HOST="${SMTP_HOST}"
-      - SMTP_SECURE=SSL
-      - SMTP_NAME="${SMTP_USERNAME}"
-      - SMTP_PASSWORD="${SMTP_PASSWORD}"
-      - MAIL_FROM_ADDRESS="${MAIL_FROM_ADDRESS}"
-      - MAIL_DOMAIN="${MAIL_DOMAIN}"
+      MYSQL_HOST: db
+      REDIS_HOST: redis
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DB}"
+      SMTP_HOST: "${SMTP_HOST}"
+      SMTP_SECURE: ssl
+      SMTP_NAME: "${SMTP_USERNAME}"
+      SMTP_PASSWORD: "${SMTP_PASSWORD}"
+      MAIL_FROM_ADDRESS: "${MAIL_FROM_ADDRESS}"
+      MAIL_DOMAIN: "${MAIL_DOMAIN}"
     depends_on:
       - db
       - redis
