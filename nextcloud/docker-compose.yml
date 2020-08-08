@@ -34,7 +34,8 @@ services:
       - SMTP_SECURE=SSL
       - SMTP_NAME="${SMTP_USERNAME}"
       - SMTP_PASSWORD="${SMTP_PASSWORD}"
-      - MAIL_FROM_ADDRESS="${SMTP_FROM_ADDR}"
+      - MAIL_FROM_ADDRESS="${MAIL_FROM_ADDRESS}"
+      - MAIL_DOMAIN="${MAIL_DOMAIN}"
     depends_on:
       - db
       - redis
