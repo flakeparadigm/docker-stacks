@@ -25,8 +25,8 @@ services:
       - "${APP_DATA}:/var/www/html/data"
       - "${APP_CONFIG}:/var/www/html/config"
     environment:
-      MYSQL_HOST: db
       REDIS_HOST: redis
+      MYSQL_HOST: db
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DB}"
@@ -36,6 +36,9 @@ services:
       SMTP_PASSWORD: "${SMTP_PASSWORD}"
       MAIL_FROM_ADDRESS: "${MAIL_FROM_ADDRESS}"
       MAIL_DOMAIN: "${MAIL_DOMAIN}"
+      OVERWRITEHOST: "${PUBLIC_HOSTNAME}"
+      OVERWRITEPROTOCOL: https
+      TRUSTED_PROXIES: "${DOCKER_IP_RANGE}"
     depends_on:
       - db
       - redis
