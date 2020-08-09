@@ -9,7 +9,7 @@ RUN set -ex; \
     procps \
     smbclient \
     supervisor \
-    # libreoffice \
+    libreoffice \
     ; \
     rm -rf /var/lib/apt/lists/*
 
@@ -46,6 +46,9 @@ RUN set -ex; \
     \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false; \
     rm -rf /var/lib/apt/lists/*
+
+# Add cron for the preview pre-generation from previewgenerator
+RUN echo '*/10 * * * * php occ preview:pre-generate' > /var/spool/cron/crontabs/www-data
 
 RUN mkdir -p \
     /var/log/supervisord \
