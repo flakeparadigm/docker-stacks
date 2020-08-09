@@ -48,7 +48,7 @@ RUN set -ex; \
     rm -rf /var/lib/apt/lists/*
 
 # Add cron for the preview pre-generation from previewgenerator
-RUN echo '*/10 * * * * php occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
+RUN echo '*/10 * * * * php /var/www/html/occ preview:pre-generate' >> /var/spool/cron/crontabs/www-data
 
 RUN mkdir -p \
     /var/log/supervisord \
