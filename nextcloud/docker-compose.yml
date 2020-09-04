@@ -63,6 +63,19 @@ services:
       traefik.http.routers.nextcloud.tls.certresolver: "letsencrypt"
       traefik.http.routers.nextcloud.tls.domains[0].main: "${PUBLIC_HOSTNAME}"
 
+  collabora:
+    image: collabora/code
+    environment:
+      DONT_GEN_SSL_CERT: set
+      domain: "${COLLABORA_ALLOWED_DOMAINS}"
+      server_name: "${COLLABORA_HOSTNAME}"
+      extra_params: --o:ssl.enable=false --o:ssl.termination=true
+    labels:
+      traefik.enable: "true"
+      traefik.http.routers.collabora.rule: "Host(`${COLLABORA_HOSTNAME}`)"
+      traefik.http.routers.collabora.entrypoints: "https"
+      traefik.http.routers.collabora.tls: "true" # Should fallback to Let's Encrypt Certificate
+
 volumes:
   db:
   app_files:
