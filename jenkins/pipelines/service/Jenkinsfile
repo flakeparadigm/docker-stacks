@@ -24,5 +24,11 @@ pipeline {
         build 'update app docker-stacks-traefik'
       }
     }
+
+    stage('Jenkins') {
+      steps {
+        build 'update app docker-stacks-jenkins'
+      }
+    }
   }
 }
