@@ -17,7 +17,7 @@ services:
       - "--certificatesResolvers.letsencrypt.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
       - "--certificatesResolvers.letsencrypt.acme.dnsChallenge.provider=${LE_DNS_PROVIDER}"
-      - "--experimental.pilot.token=${TRAEFIK_PILOT_TOKEN}"
+      - "--pilot.token=${TRAEFIK_PILOT_TOKEN}"
     environment:
       CF_DNS_API_TOKEN: "${LE_DNS_SECRET}"
     network_mode: host # Use host mode for proper client IP forwarding
