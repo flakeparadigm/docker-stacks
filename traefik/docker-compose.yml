@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   reverse-proxy:
-    image: traefik:2.2
+    image: traefik:2.3
     command:
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
@@ -17,7 +17,7 @@ services:
       - "--certificatesResolvers.letsencrypt.acme.email=${LE_EMAIL}"
       - "--certificatesresolvers.letsencrypt.acme.storage=/etc/traefik/acme/acme.json"
       - "--certificatesResolvers.letsencrypt.acme.dnsChallenge.provider=${LE_DNS_PROVIDER}"
-#      - "--pilot.token=${TRAEFIK_PILOT_TOKEN}"
+      - "--pilot.token=${TRAEFIK_PILOT_TOKEN}"
     environment:
       CF_DNS_API_TOKEN: "${LE_DNS_SECRET}"
     network_mode: host # Use host mode for proper client IP forwarding
