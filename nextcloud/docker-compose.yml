@@ -64,7 +64,7 @@ services:
       traefik.http.routers.nextcloud.tls.domains[0].main: "${PUBLIC_HOSTNAME}"
 
   collabora:
-    image: collabora/code
+    image: collabora/code:latest
     environment:
       DONT_GEN_SSL_CERT: set
       domain: "${COLLABORA_ALLOWED_DOMAINS}"
