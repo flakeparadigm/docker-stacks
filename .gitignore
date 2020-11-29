@@ -1,3 +1,4 @@
 .env
 acme.json
 wordpress/webroot
+volume_backups
