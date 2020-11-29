@@ -69,7 +69,7 @@ services:
       DONT_GEN_SSL_CERT: set
       domain: "${COLLABORA_ALLOWED_DOMAINS}"
       server_name: "${COLLABORA_HOSTNAME}"
-      extra_params: --o:ssl.enable=false --o:ssl.termination=true
+      extra_params: --o:ssl.enable=false --o:ssl.termination=true --o:welcome.enable=false
     labels:
       traefik.enable: "true"
       traefik.http.routers.collabora.rule: "Host(`${COLLABORA_HOSTNAME}`)"
