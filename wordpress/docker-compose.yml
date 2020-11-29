@@ -16,7 +16,7 @@ services:
   wordpress:
     build: ./wordpress
     volumes:
-      - app_data:/var/www/html
+      - ./webroot/html:/var/www/html
     environment:
       WORDPRESS_DB_HOST: db
       WORDPRESS_DB_NAME: "${MYSQL_DB}"
@@ -35,7 +35,7 @@ services:
     build: ./nginx
     restart: always
     volumes:
-      - app_data:/var/www/html:ro
+      - ./webroot/html:/var/www/html:ro
     depends_on:
       - wordpress
     labels:
