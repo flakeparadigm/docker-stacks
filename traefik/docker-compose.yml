@@ -2,7 +2,7 @@ version: "3.5"
 
 services:
   reverse-proxy:
-    image: traefik:2.3
+    image: traefik:2.4
     command:
       - "--api.dashboard=true"
       - "--entryPoints.http.address=:80"
