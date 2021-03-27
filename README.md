@@ -9,6 +9,6 @@ Various docker container stacks for personal use.
 * Nextcloud: fpm
 * NGINX: 1.19
 * Redis: buster
-* Traefik: 2.3
-* Wordpress: php7.4-fpm
-* ZNC: Latest
+* Traefik: 2.4
+* Wordpress: php8.0-fpm
+* ZNC: latest
