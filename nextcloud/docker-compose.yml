@@ -65,6 +65,7 @@ services:
 
   collabora:
     image: collabora/code:latest
+    restart: always
     environment:
       DONT_GEN_SSL_CERT: set
       domain: "${COLLABORA_ALLOWED_DOMAINS}"
