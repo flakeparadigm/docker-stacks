@@ -1,5 +1,5 @@
 # Docker Stacks
-Various docker container stacks for personal use.
+Various docker container stacks for personal use
 
 ## Image versions
 * Collabora Code: latest
