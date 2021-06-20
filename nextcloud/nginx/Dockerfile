@@ -1,3 +1,3 @@
-FROM nginx:1.19
+FROM nginx:mainline
 
 COPY nginx.conf /etc/nginx/nginx.conf
