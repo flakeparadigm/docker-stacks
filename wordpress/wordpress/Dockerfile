@@ -14,7 +14,10 @@ RUN apt-get install -y --no-install-recommends \
     libzip-dev \
     libmcrypt-dev
 
-RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar exif gettext gmp mysqli pcntl pdo_mysql shmop sockets sysvmsg sysvsem sysvshm xmlrpc xsl opcache zip
+RUN docker-php-ext-install -j$(nproc) bcmath bz2 calendar exif gettext gmp mysqli pcntl pdo_mysql shmop sockets sysvmsg sysvsem sysvshm xsl opcache zip
+
+RUN pecl install xmlrpc-1.0.0RC2 &&\
+    docker-php-ext-enable xmlrpc
 
 RUN pecl install igbinary &&\
     docker-php-ext-enable igbinary

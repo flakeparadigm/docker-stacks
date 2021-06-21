@@ -16,3 +16,4 @@ Various docker container stacks for personal use
 
 ## Built dependency versions
 * dlib: v19.22
+* xmlrpc: v1.0.0RC2
