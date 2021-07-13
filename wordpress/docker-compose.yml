@@ -13,6 +13,10 @@ services:
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DB}"
 
+  memcached:
+    image: memcached:buster
+    restart: always
+
   wordpress:
     build: ./wordpress
     volumes:
@@ -25,6 +29,7 @@ services:
       WORDPRESS_TABLE_PREFIX: "${WP_TABLE_PREFIX}"
     depends_on:
       - db
+      - memcached
     restart: always
     networks:
       default:

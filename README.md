@@ -3,9 +3,10 @@ Various docker container stacks for personal use
 
 ## Image versions
 * Collabora Code: latest
-* Elasticsearch: 7.13.2
+* Elasticsearch: 7.13.3
 * Jenkins: lts-jdk11
 * MariaDB: 10
+* Memcached: buster
 * MySQL: 8
 * Nextcloud: fpm
 * NGINX: mainline
@@ -15,5 +16,5 @@ Various docker container stacks for personal use
 * ZNC: latest
 
 ## Built dependency versions
-* dlib: v19.22
-* xmlrpc: v1.0.0RC2
+* [dlib: v19.22](https://github.com/davisking/dlib)
+* [xmlrpc: v1.0.0RC2](https://pecl.php.net/package/xmlrpc)

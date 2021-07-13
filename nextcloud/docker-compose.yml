@@ -19,7 +19,7 @@ services:
     command: "redis-server --requirepass ${REDIS_PASSWORD}"
 
   elasticsearch:
-    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
     restart: always
     command: >
       /bin/sh -c "./bin/elasticsearch-plugin list | grep -q ingest-attachment
