@@ -7,7 +7,6 @@ Various docker container stacks for personal use
 * Jenkins: lts-jdk11
 * MariaDB: 10
 * Memcached: buster
-* MySQL: 8
 * Nextcloud: fpm
 * NGINX: mainline
 * Redis: buster
